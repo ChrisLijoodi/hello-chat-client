@@ -8,7 +8,12 @@ RUN mvn clean package -DskipTests
 # ---------- Runtime stage ----------
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /chat-client
+
+# REQUIRED for Netty quiche (Anthropic / HTTP2)
+RUN apk add --no-cache libgcc
+
 COPY --from=build /chat-client/target/*.jar chat-client-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8081
 ENTRYPOINT ["java","-jar","chat-client-0.0.1-SNAPSHOT.jar"]
+
