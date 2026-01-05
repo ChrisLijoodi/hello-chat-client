@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
 @RestController
+@RequestMapping("/chat")
 public class HelloChatController {
     private static final Logger log = LoggerFactory.getLogger(HelloChatController.class);
     private final ChatClient chatClient;
@@ -28,5 +30,11 @@ public class HelloChatController {
         return chatClient.prompt()
                 .user("List the greetings")
                 .call().content();
+    }
+
+    @GetMapping("/hello-test")
+    public String chatTest(){
+        log.info("hello greetings test called!");
+        return "List the greetings";
     }
 }
