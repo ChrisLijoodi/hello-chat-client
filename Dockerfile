@@ -22,7 +22,12 @@ RUN apt-get update && apt-get install -y \
 COPY --from=build /chat-client/target/*.jar chat-client-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8081
-ENTRYPOINT ["java","-jar","chat-client-0.0.1-SNAPSHOT.jar"]
+#ENTRYPOINT ["java","-jar","chat-client-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", \
+  "-XX:MaxRAMPercentage=75", \
+  "-Djava.security.egd=file:/dev/urandom", \
+  "-Djava.net.preferIPv4Stack=true", \
+  "-jar", "chat-client-0.0.1-SNAPSHOT.jar"]
 
 ## ---------- Build stage ----------
 #FROM maven:3.9.6-eclipse-temurin-21 AS build
