@@ -24,6 +24,7 @@ public class HelloChatController {
 
     @GetMapping("/hello")
     public String chat(){
+        log.info("hello greetings called!");
         return chatClient.prompt()
                 .user("List the greetings")
                 .call().content();
